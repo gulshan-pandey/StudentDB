@@ -15,7 +15,6 @@ public class DBOperations {
     }
 
     public static void closeConnection(Connection connection)  {
-        if(connection != null) {
             try {
                 if (connection != null) {
                     connection.close();
@@ -23,7 +22,6 @@ public class DBOperations {
             } catch (SQLException e) {
                 System.out.println("Error closing connection: " + e.getMessage());
             }
-        }
     }
 
 
