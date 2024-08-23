@@ -6,19 +6,37 @@ import java.util.Scanner;
 
 public class CRUDOperations {
 
-    public static void fetch(ResultSet resultSet) throws SQLException {
+    public static void fetch(Statement statement) throws SQLException {
 
             //Class.forName("com.mysql.jdbc.Driver");
-
+            ResultSet fetchData = statement.executeQuery("Select * from stu");
             System.out.println("*******************STUDENT DETAILS*****************************************************************");
-            while(resultSet.next()){
-                System.out.println("Student id: " +  resultSet.getInt("stu_id"));
-                System.out.println("Student name: " +  resultSet.getString("name"));
-                System.out.println("Student email: " +  resultSet.getString("email"));
-                System.out.println("Student phone number: " +  resultSet.getString("phone_no"));
+            while(fetchData.next()){
+                System.out.println("Student id: " +  fetchData.getInt("stu_id"));
+                System.out.println("Student name: " +  fetchData.getString("name"));
+                System.out.println("Student email: " +  fetchData.getString("email"));
+                System.out.println("Student phone number: " +  fetchData.getString("phone_no"));
                 System.out.println("*************************************************************************************************");
             }
     }
+
+
+
+
+    public static void Delete(Statement statement, Scanner sc) throws SQLException {
+
+        CRUDOperations.fetch(statement);       // calling fetch data function (to show the data before deleting));          // showing all the data before deletion
+        System.out.println("\nEnter the id of the record to delete:");
+        int deleteId = sc.nextInt();
+        int i = statement.executeUpdate("DELETE FROM stu WHERE stu_id = " + deleteId + ";");
+        if(i>0){
+            System.out.println("data deleted successfully");
+        }else{
+            System.out.println("data not deleted, Something went wrong... please try again");
+        }
+    }
+
+
 
 
 
@@ -48,27 +66,6 @@ public class CRUDOperations {
         }
 
     }
-
-
-
-
-
-
-    public static void Delete(Statement statement, Scanner sc) throws SQLException {
-
-        CRUDOperations.fetch(statement.executeQuery("SELECT * FROM stu;"));          // showing all the data before deletion
-
-            System.out.println("\nEnter the id of the record to delete:");
-            int deleteId = sc.nextInt();
-            int i = statement.executeUpdate("DELETE FROM stu WHERE stu_id = " + deleteId + ";");
-            if(i>0){
-                System.out.println("data deleted successfully");
-            }else{
-                System.out.println("data not deleted, Something went wrong... please try again");
-            }
-    }
-
-
 
 
 
@@ -107,8 +104,6 @@ public class CRUDOperations {
             else System.out.println("something went wrong in batch processing");
         }
     }
-
-
 
 
 }
