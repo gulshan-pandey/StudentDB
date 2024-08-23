@@ -1,4 +1,5 @@
-# StudentDB-Manager
+# StudentDB
+
 
 **StudentDB-Manager** is a Java-based application designed to manage student-related data. It provides functionalities to perform CRUD (Create, Read, Update, Delete) operations on a student database. The application uses JDBC for database connectivity and can be easily integrated with MySQL or other relational databases.
 
