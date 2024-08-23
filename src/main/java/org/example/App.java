@@ -17,7 +17,7 @@ public class App
 
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Which action do you want to perform: \n 1. Fetch Data \n 2. Insert Data \n 3. Batch Execute \n 4. Delete Data  ");
+        System.out.println("Which action do you want to perform: \n 1. Fetch Data \n 2. Insert Data \n 3. Batch Insert \n 4. Delete Data  ");
 
         int choice = 0;
 
@@ -26,14 +26,14 @@ public class App
         } catch (Exception e) {}
 
 
-        try(Connection connection = DBOperations.getConnection()){
+        try(Connection connection = DBOperations.getConnection()){              //try with resources
         Statement statement = connection.createStatement();
 
         switch(choice){
             case 1:
-                ResultSet fetchData = statement.executeQuery("Select * from stu");
+
                 try {
-                    CRUDOperations.fetch(fetchData) ;       // calling fetch data function
+                    CRUDOperations.fetch(statement) ;       // calling fetch data function
                 } catch (SQLException e) {
                     System.out.println("error occured while fetching the data " + e.getMessage());;
                 }
@@ -42,8 +42,12 @@ public class App
 
 
             case 2:                         // Insert data
-               CRUDOperations.Insert(statement, sc);
-            break;
+                try {
+                    CRUDOperations.Insert(statement, sc);
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
 
 
               /*  int row = statement.executeUpdate("INSERT INTO stu VALUES(8, 'vipul','vipul@gmail.com','43343582');");       // when update query execute in mysql, the number of rows affected is returned
